@@ -1,7 +1,20 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sprintf/sprintf.dart';
+
+void showToast(String message) {
+  Fluttertoast.showToast(
+    msg: message,
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 5,
+    backgroundColor: Colors.grey,
+    textColor: Colors.white,
+    fontSize: 16.0
+  );
+}
 
 enum TimerStatus { running, paused, stopped, resting }
 
@@ -74,7 +87,7 @@ class _TimerScreenState extends State<TimerScreen> {
           break;
         case TimerStatus.running:
           if (_timer <= 0) {
-            print("작업완료");
+            showToast("작업완료!");
             rest();
           } else {
             setState(() {
@@ -87,7 +100,7 @@ class _TimerScreenState extends State<TimerScreen> {
             setState(() {
               _pomodoroCount = _pomodoroCount + 1;
             });
-            print("오늘 $_pomodoroCount개의 뽀모도로를 달성했습니다.");
+            showToast("오늘 $_pomodoroCount개의 뽀모도로를 달성했습니다.");
             t.cancel();
             stop();
           } else {
